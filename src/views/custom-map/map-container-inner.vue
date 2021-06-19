@@ -13,7 +13,7 @@
 // limitations under the License.
 
 <template>
-  <div ref="mapRef" :class="$style['map-container-inner']">
+  <div ref="mapRef" :class="$style['map-container-inner']" :style="mapStyle">
     <img :src="t5" alt="">
   </div>
 </template>
@@ -24,7 +24,10 @@ import {
   nextTick,
   onMounted,
   onBeforeUnmount,
+  reactive,
   ref,
+  toRef,
+  computed,
 } from 'vue'
 import t5 from '../../assets/t5.jpg'
 
@@ -66,6 +69,18 @@ export default defineComponent({
     let startY = 0;
     let x = 0;
     let y = 0;
+    const state = reactive({
+      top: '0px',
+      left: '0px',
+    })
+    const topRef = toRef(state, 'top')
+    const leftRef = toRef(state, 'left')
+    const mapStyle = computed(() => {
+      return {
+        left: leftRef.value,
+        top: topRef.value,
+      }
+    })
     const touchstartHandle = function(e: TouchEvent) {
       console.log('trigger touchstart')
       const mapDiv = <HTMLDivElement>mapRef.value
@@ -91,8 +106,6 @@ export default defineComponent({
           endY: mapEndY,
         },
       } = mapInfo
-      console.log(mapInfo)
-      console.log(top, left)
       if (left > mapStartX) {
         left = mapStartX
       }
@@ -105,8 +118,10 @@ export default defineComponent({
       if (top < -mapEndY) {
         top = -mapEndY
       }
-      mapDiv.style.left = left + 'px';
-      mapDiv.style.top = top + 'px';
+      // mapDiv.style.left = left + 'px';
+      // mapDiv.style.top = top + 'px';
+      topRef.value = top + 'px'
+      leftRef.value = left + 'px'
       e.preventDefault();
     }
     const touchendHandle = function(e: TouchEvent) {
@@ -146,8 +161,10 @@ export default defineComponent({
           left,
         },
       } = mapInfo
-      mapDiv.style.top = -top + 'px'
-      mapDiv.style.left = -left + 'px'
+      // mapDiv.style.top = -top + 'px'
+      // mapDiv.style.left = -left + 'px'
+      topRef.value = -top + 'px'
+      leftRef.value = -left + 'px'
     }
     const loadHandle = () => {
       initMap()
@@ -179,6 +196,7 @@ export default defineComponent({
     })
     return {
       mapRef,
+      mapStyle,
       t5,
     }
   },
