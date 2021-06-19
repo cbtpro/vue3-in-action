@@ -1,1 +1,0 @@
-import{d as e,o as r,e as a,t as o}from"./vendor.dd946b5b.js";var s=e({name:"Home",setup:()=>({name:"peter"})});var n={home:"_home_2cbfg_3"};(s.__cssModules={}).$style=n,s.render=function(e,s,n,t,d,m){return r(),a("div",null,o(e.name),1)};export default s;
