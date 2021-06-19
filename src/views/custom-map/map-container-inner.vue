@@ -14,7 +14,7 @@
 
 <template>
   <div ref="mapRef" :class="$style['map-container-inner']" :style="mapStyle">
-    <img :src="t5" alt="">
+    <img :src="t5" @load="imageLoadHandle" alt="">
   </div>
 </template>
 
@@ -170,16 +170,19 @@ export default defineComponent({
       initMap()
       bindOperatorEvent()
     }
-    const init = () => {
-      window.addEventListener('load', loadHandle)
-    }
+    // const init = () => {
+    //   window.addEventListener('load', loadHandle)
+    // }
     onMounted(() => {
       nextTick(() => {
-        init()
+        // init()
       })
     })
     const unBindOperaterEvent = () => {
       window.removeEventListener('load', loadHandle)
+    }
+    const imageLoadHandle = () => {
+      loadHandle()
     }
     const destoryOperatorEvent = () => {
       const mapDiv = <HTMLDivElement>mapRef.value
@@ -198,6 +201,7 @@ export default defineComponent({
       mapRef,
       mapStyle,
       t5,
+      imageLoadHandle,
     }
   },
 })
@@ -209,10 +213,13 @@ export default defineComponent({
   position: absolute;
   left: 0;
   top: 0;
-  will-change: transform;
-
+  /* will-change: transform; */
   /* Prefixes are needed for Safari and other WebKit-based browsers */
-  transition: -webkit-transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
-  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  /* transition: -webkit-transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  transition: transform 0.3s cubic-bezier(0.465, 0.183, 0.153, 0.946); */
+
+  will-change: left, top;
+  transition: all 0.1s cubic-bezier(0.465, 0.183, 0.153, 0.946);
+  transition: all 0.1s cubic-bezier(0.465, 0.183, 0.153, 0.946);
 }
 </style>
