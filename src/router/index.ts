@@ -19,6 +19,7 @@ const routes = [
   {
     path: '/',
     redirect: '/home',
+    meta: {},
   },
   {
     path: '/home',
@@ -32,9 +33,17 @@ const routes = [
     path: '/demo-list',
     name: 'demo-list',
     meta: {
-      title: '主页',
+      title: 'demo列表',
     },
     component: () => import('../views/demo-list/index.vue'),
+  },
+  {
+    path: '/custom-map',
+    name: 'custom-map',
+    meta: {
+      title: 'map',
+    },
+    component: () => import('../views/custom-map/index.vue'),
   }
 ]
 
