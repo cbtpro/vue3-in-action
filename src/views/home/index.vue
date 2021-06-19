@@ -1,8 +1,8 @@
 <template>
   <div>
     <ul>
-      <li v-for="router in routers" :key="router.name">
-        <router-link :to="router.path">{{router.meta.title || router.path}}</router-link>
+      <li v-for="router in routers" :key="router.path">
+        <router-link :to="router.path">{{router?.meta?.title || router.path}}</router-link>
       </li>
     </ul>
   </div>
