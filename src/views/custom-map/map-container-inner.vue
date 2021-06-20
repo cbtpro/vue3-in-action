@@ -13,8 +13,11 @@
 // limitations under the License.
 
 <template>
-  <div ref="mapRef" :class="$style['map-container-inner']" :style="mapStyle">
-    <img :src="t5" @load="imageLoadHandle" alt="">
+  <div ref="mapRef" :class="$style['map-container-inner']" :style="mapStyle" @click="mapClickHandle">
+    <img :src="t5" @load="imageLoadHandle" alt="" style="display: none;">
+    <div :class="$style.t5">
+      <slot name="default"></slot>
+    </div>
   </div>
 </template>
 
@@ -47,6 +50,10 @@ export default defineComponent({
         clientHeight: mapHeight,
       } = mapElement
       return {
+        view: {
+          width: viewWidth,
+          height: viewHeight,
+        },
         size: {
           width: mapWidth,
           height: mapHeight,
@@ -70,15 +77,15 @@ export default defineComponent({
     let x = 0;
     let y = 0;
     const state = reactive({
-      top: '0px',
-      left: '0px',
+      top: 0,
+      left: 0,
     })
     const topRef = toRef(state, 'top')
     const leftRef = toRef(state, 'left')
     const mapStyle = computed(() => {
       return {
-        left: leftRef.value,
-        top: topRef.value,
+        left: leftRef.value + 'px',
+        top: topRef.value + 'px',
       }
     })
     const touchstartHandle = function(e: TouchEvent) {
@@ -120,8 +127,8 @@ export default defineComponent({
       }
       // mapDiv.style.left = left + 'px';
       // mapDiv.style.top = top + 'px';
-      topRef.value = top + 'px'
-      leftRef.value = left + 'px'
+      topRef.value = top
+      leftRef.value = left
       e.preventDefault();
     }
     const touchendHandle = function(e: TouchEvent) {
@@ -163,8 +170,8 @@ export default defineComponent({
       } = mapInfo
       // mapDiv.style.top = -top + 'px'
       // mapDiv.style.left = -left + 'px'
-      topRef.value = -top + 'px'
-      leftRef.value = -left + 'px'
+      topRef.value = -top
+      leftRef.value = -left
     }
     const loadHandle = () => {
       initMap()
@@ -173,9 +180,49 @@ export default defineComponent({
     // const init = () => {
     //   window.addEventListener('load', loadHandle)
     // }
+    const move = (top: number, left: number) => {
+      const mapInfo = getMapInfo()
+      const {
+        range: {
+          startX: mapStartX,
+          startY: mapStartY,
+          endX: mapEndX,
+          endY: mapEndY,
+        },
+      } = mapInfo
+      if (left > mapStartX) {
+        left = mapStartX
+      }
+      if (top > mapStartY) {
+        top = mapStartY
+      }
+      if (left < -mapEndX) {
+        left = -mapEndX
+      }
+      if (top < -mapEndY) {
+        top = -mapEndY
+      }
+      topRef.value = top
+      leftRef.value = left
+    }
+    const test = () => {
+      setTimeout(() => {
+        move(0, 0)
+      }, 2000)
+      setTimeout(() => {
+        move(200, 300)
+      }, 5000)
+      setTimeout(() => {
+        move(500, 300)
+      }, 8000)
+      setTimeout(() => {
+        move(500, 400)
+      }, 10000)
+    }
     onMounted(() => {
       nextTick(() => {
         // init()
+        test()
       })
     })
     const unBindOperaterEvent = () => {
@@ -197,11 +244,49 @@ export default defineComponent({
       unBindOperaterEvent()
       destoryOperatorEvent()
     })
+    const mapClickHandle = (e: MouseEvent) => {
+      const mapInfo = getMapInfo()
+      const {
+        view: {
+          width,
+          height,
+        },
+      } = mapInfo
+      const {
+        offsetX,
+        offsetY,
+      } = e
+      let top = -offsetY + (height / 2)
+      let left = -offsetX + (width / 2)
+      const {
+        range: {
+          startX: mapStartX,
+          startY: mapStartY,
+          endX: mapEndX,
+          endY: mapEndY,
+        },
+      } = mapInfo
+      if (left > mapStartX) {
+        left = mapStartX
+      }
+      if (top > mapStartY) {
+        top = mapStartY
+      }
+      if (left < -mapEndX) {
+        left = -mapEndX
+      }
+      if (top < -mapEndY) {
+        top = -mapEndY
+      }
+      topRef.value = top
+      leftRef.value = left
+    }
     return {
       mapRef,
       mapStyle,
       t5,
       imageLoadHandle,
+      mapClickHandle,
     }
   },
 })
@@ -209,6 +294,12 @@ export default defineComponent({
 </script>
 
 <style module>
+.t5 {
+  width: 2300px;
+  height: 1103px;
+  background-image: url(../../assets/t5.jpg);
+  background-size: cover;
+}
 .map-container-inner {
   position: absolute;
   left: 0;

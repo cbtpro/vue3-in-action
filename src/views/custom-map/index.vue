@@ -17,7 +17,9 @@
 <template>
   <div :class="$style['map']">
     <map-container>
-      <map-container-inner />
+      <map-container-inner>
+        <shops />
+      </map-container-inner>
     </map-container>
   </div>
 </template>
@@ -26,12 +28,14 @@
 import { defineComponent } from 'vue'
 import MapContainer from './map-container.vue'
 import MapContainerInner from './map-container-inner.vue'
+import Shops from './shops/index.vue'
 
 export default defineComponent({
   name: 'custom-map',
   components: {
     MapContainer,
     MapContainerInner,
+    Shops,
   },
   setup() {
     return {
