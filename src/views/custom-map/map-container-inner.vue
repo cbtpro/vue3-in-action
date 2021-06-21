@@ -32,7 +32,7 @@ import {
   toRef,
   computed,
 } from 'vue'
-import t5 from '../../assets/t5.jpg'
+import t5 from '@/assets/t5.jpg'
 
 export default defineComponent({
   name: 'map-container-inner',
