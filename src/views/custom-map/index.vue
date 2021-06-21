@@ -29,6 +29,7 @@ import { defineComponent } from 'vue'
 import MapContainer from './map-container.vue'
 import MapContainerInner from './map-container-inner.vue'
 import Shops from './shops/index.vue'
+import useApi from '../../api/use-api'
 
 export default defineComponent({
   name: 'custom-map',
@@ -38,6 +39,18 @@ export default defineComponent({
     Shops,
   },
   setup() {
+    const { request } = useApi()
+    const testApi = async () => {
+        try {
+          const response = await request({
+          url: '/api/index/test',
+        })
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    testApi()
     return {
       name: 'peter',
     }
