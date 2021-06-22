@@ -12,17 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-console.log(import.meta.env.VITE_VERSION)
-if (process.env.NODE_ENV === 'production') {
-  import('mock2js').then(Mockjs => {
-
-    import('./api/index/test')
-    
-    Mockjs.setup({
-      timeout: 800,
-    })
-
-  })
-
-  console.log('mock initial complete!')
+interface IGood {
+    uuid: string
+    name: string
+    title: string
+    src: string
+    href: string
+    price: number
 }

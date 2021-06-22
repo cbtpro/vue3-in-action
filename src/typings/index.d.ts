@@ -1,0 +1,1 @@
+/// <reference path="./demo/index.d.ts">

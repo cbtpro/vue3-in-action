@@ -44,7 +44,15 @@ const routes = [
       title: 'map',
     },
     component: () => import('../views/custom-map/index.vue'),
-  }
+  },
+  {
+    path: '/waterfall-flow',
+    name: 'waterfall-flow',
+    meta: {
+      title: '瀑布流',
+    },
+    component: () => import('../views/waterfall-flow/index.vue'),
+  },
 ]
 
 export default createRouter({
