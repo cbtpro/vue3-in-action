@@ -26,10 +26,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import MapContainer from './map-container.vue'
-import MapContainerInner from './map-container-inner.vue'
-import Shops from './shops/index.vue'
+import MapContainer from '@/views/custom-map//map-container.vue'
+import MapContainerInner from '@/views/custom-map/map-container-inner.vue'
+import Shops from '@/views/custom-map/shops/index.vue'
 import useApi from '../../api/use-api'
+import useHttp from '../../api/use-http'
 
 export default defineComponent({
   name: 'custom-map',
@@ -51,9 +52,39 @@ export default defineComponent({
       }
     }
     testApi()
+
+    const { get } = useHttp()
+    const testHttp = async () => {
+        try {
+          const response = await get('/api/index/test')
+        console.log('testUseHttp', response)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    testHttp()
     return {
       name: 'peter',
     }
+  },
+  created() {
+    this.testHttp()
+  },
+  mounted() {
+    console.log('测试插件$perf:', this.$perf)
+    console.log('测试插件$http:', this.$http)
+  },
+  methods: {
+    async testHttp() {
+      try {
+        const response = await this.$http.get('/api/index/test')
+        console.log('testHttp:', response)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        // 收尾操作
+      }
+    },
   },
 });
 </script>

@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import 'es6-promise/auto'
+import utils from './utils'
 import './mock'
 import store from './store'
 import router from './router'
@@ -11,6 +12,8 @@ console.log(process.env.NODE_ENV)
 const vConsole = new VConsole({ maxLogNumber: 1000 })
 
 const app = createApp(App)
+
+app.use(utils)
 
 app.use(store)
 

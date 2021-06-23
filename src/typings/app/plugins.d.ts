@@ -11,18 +11,12 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+import perf from '../../utils/perf'
+import http from '../../utils/http'
 
-console.log(import.meta.env.VITE_VERSION)
-if (process.env.NODE_ENV === 'development') {
-  import('mock2js').then(Mockjs => {
-
-    import('./api/index/test')
-    
-    Mockjs.setup({
-      timeout: 800,
-    })
-
-  })
-
-  console.log('mock initial complete!')
+declare module '@vue/runtime-core' {
+  export interface ComponentCustomProperties {
+    $http: typeof http
+    $perf: typeof perf
+  }
 }

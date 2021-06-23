@@ -12,17 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-console.log(import.meta.env.VITE_VERSION)
-if (process.env.NODE_ENV === 'development') {
-  import('mock2js').then(Mockjs => {
+import perf from './perf'
+import http from './http'
 
-    import('./api/index/test')
-    
-    Mockjs.setup({
-      timeout: 800,
-    })
-
-  })
-
-  console.log('mock initial complete!')
+export default {
+  install(app: any) {
+    app.config.globalProperties.$perf = perf
+    app.config.globalProperties.$http = http
+  },
 }
