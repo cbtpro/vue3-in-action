@@ -6,6 +6,7 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, onMounted, reactive, ref, useCssModule } from 'vue'
+import usePerf from '../../hook/use-perf'
 import Box from './box.vue'
 import img1 from '@/assets/images/1.jpg'
 import img2 from '@/assets/images/2.jpg'
@@ -154,30 +155,32 @@ export default defineComponent({
       const data: IGood[] = await requestData()
       nextFall(data)
     }
-    const debounce =  (action: Function, idle: number = 300) =>{
-      let last: number
-      return (...rest: any) =>{
-        if (last) window.clearTimeout(last)
-        last = window.setTimeout(function(){
-            action.apply(this, rest)
-        }, idle)
-      }
-    }
-    const throttle = (action: Function, idle: number = 300) =>{
-      var lastTime = 0
-      return (...rest: any) => {
-        var now = Date.now()
-        if(now - lastTime > idle) { 
-          action.apply(this, rest)
-          lastTime = now
-        }
-      }
-    }
+    // const debounce =  (action: Function, idle: number = 300) =>{
+    //   let last: number
+    //   return (...rest: any) =>{
+    //     if (last) window.clearTimeout(last)
+    //     last = window.setTimeout(() =>{
+    //         action.apply(this, rest)
+    //     }, idle)
+    //   }
+    // }
+    // const throttle = (action: Function, idle: number = 300) =>{
+    //   var lastTime = 0
+    //   return (...rest: any) => {
+    //     var now = Date.now()
+    //     if(now - lastTime > idle) { 
+    //       action.apply(this, rest)
+    //       lastTime = now
+    //     }
+    //   }
+    // }
+    const { Throttle } = usePerf()
     onMounted(() => {
       nextTick(() => {
         firstFall()
         //设置滚动加载
-        window.onscroll = throttle(async function () {
+        window.onscroll = new Throttle().use(async function () {
+          console.log('onscroll')
           //校验数据请求
           if (getCheck()) {
             const data: IGood[] = await requestData()

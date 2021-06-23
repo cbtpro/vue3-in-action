@@ -32,24 +32,23 @@ export class Debounce {
 }
 
 export class Throttle {
-  static use(action: Function, idle: number = 300, immediate: boolean = true) {
+  private lastTime: number | undefined = Date.now()
+  use(action: Function, idle: number = 300, immediate: boolean = true) {
     if (immediate) {
-      let lastTime: number
       return (...rest: any) => {
         const now = Date.now()
-        if(now - lastTime > idle) { 
+        if(now - (this.lastTime as number) > idle) {
           action.apply(this, rest)
-          lastTime = now
+          this.lastTime = now
         }
       }
     } else {
-      let lastTime: number | undefined
       return (...rest: any) => {
-        if (!lastTime) {
+        if (!this.lastTime) {
           action.apply(this, rest)
-          lastTime = window.setTimeout(() => {
-            if (lastTime) window.clearTimeout(lastTime)
-            lastTime = undefined
+          this.lastTime = window.setTimeout(() => {
+            if (this.lastTime) window.clearTimeout(this.lastTime)
+            this.lastTime = undefined
           }, idle)
         }
       }
