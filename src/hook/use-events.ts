@@ -1,4 +1,4 @@
-// Copyright 2021 cbtpro
+// Copyright 2021 peter
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,14 +11,11 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-import events from '../../utils/event'
-import perf from '../../utils/perf'
-import http from '../../utils/http'
 
-declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
-    $events: typeof events
-    $http: typeof http
-    $perf: typeof perf
+import Events from '../utils/event'
+
+export default () => {
+  return {
+    $events: Events
   }
 }

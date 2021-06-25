@@ -12,11 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import Events from './event'
 import perf from './perf'
 import http from './http'
 
 export default {
   install(app: any) {
+    app.config.globalProperties.$events = Events
     app.config.globalProperties.$perf = perf
     app.config.globalProperties.$http = http
   },

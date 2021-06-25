@@ -53,6 +53,14 @@ const routes = [
     },
     component: () => import('../views/waterfall-flow/index.vue'),
   },
+  {
+    path: '/events',
+    name: 'events',
+    meta: {
+      title: '事件总线',
+    },
+    component: () => import('../views/events/index.vue'),
+  },
 ]
 
 export default createRouter({
