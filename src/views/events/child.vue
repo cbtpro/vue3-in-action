@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.events">
+  <div :class="$style.child">
     <button @click="test">触发事件</button>
   </div>
 </template>
@@ -9,7 +9,7 @@ import { defineComponent } from 'vue'
 import useEvents from '../../hook/use-events'
 
 export default defineComponent({
-  name: 'parent',
+  name: 'child',
   setup() {
     const { $events } = useEvents()
     const test = () => {
@@ -23,5 +23,5 @@ export default defineComponent({
 </script>
 
 <style module>
-.parent {}
+.child {}
 </style>

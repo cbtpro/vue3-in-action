@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.events">
+  <div :class="$style.parent">
     当前系统时间: {{now}}
     <slot name="default"></slot>
   </div>
