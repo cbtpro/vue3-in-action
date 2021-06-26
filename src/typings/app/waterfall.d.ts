@@ -12,6 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// <reference path="./event.d.ts">
-/// <reference path="./plugins.d.ts">
-/// <reference path="./waterfall.d.ts">
+declare namespace waterfall {
+  interface info {
+    boxWidth: number
+    colsNum: number
+    viewWidth: number
+    colHeights: number[]
+    currentProcessIndex: number
+  }
+}

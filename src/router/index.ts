@@ -49,6 +49,14 @@ const routes = [
     path: '/waterfall-flow',
     name: 'waterfall-flow',
     meta: {
+      title: '新瀑布流',
+    },
+    component: () => import('../views/new-waterfall-flow/index.vue'),
+  },
+  {
+    path: '/waterfall-flow1',
+    name: 'waterfall-flow1',
+    meta: {
       title: '瀑布流',
     },
     component: () => import('../views/waterfall-flow/index.vue'),

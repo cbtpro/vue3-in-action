@@ -1,13 +1,20 @@
 <template>
   <div ref="containerRef" :class="$style['waterfall-flow']">
-    <item v-for="(good, $index) in goods" :index="$index" :key="good.uuid">
-      <box :good="good" />
+    <item
+      ref="itemsRef"
+      v-for="(good, $index) in goods"
+      :key="good.uuid"
+      :index="$index"
+      :completed="status[$index]"
+      @process-next="processNext"
+    >
+      <box :good="good" @completed="completed" :index="$index" />
     </item>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, onMounted, onUpdated, reactive, ref, useCssModule } from 'vue'
+import { defineComponent, nextTick, onMounted, onUpdated, provide, reactive, ref, useCssModule, watch } from 'vue'
 import usePerf from '../../hook/use-perf'
 import Item from './item.vue'
 import Box from './box.vue'
@@ -35,6 +42,8 @@ const images = [
   img10,
 ]
 
+export const WATERFALL_INFO_KEY = 'WATERFALL_INFO_KEY'
+
 export default defineComponent({
   name: 'waterfall-flow',
   components: {
@@ -43,16 +52,30 @@ export default defineComponent({
   },
   setup() {
     const containerRef = ref<HTMLDivElement>()
+    const itemsRef = ref<HTMLDivElement[]>([])
     const $style = useCssModule();
 
-    const info = reactive({
+    // 当前正在渲染的索引
+    const waterfallInfo = reactive<waterfall.info>({
       boxWidth: 816,
       colsNum: Math.floor(document.documentElement.clientWidth / 816),
-      containerWidth: 816 * 2,
+      viewWidth: 816 * 2,
       colHeights: [],
+      currentProcessIndex: 0
     })
+    const processNext = async (task: () => Promise<void>) => {
+      await task()
+      waterfallInfo.currentProcessIndex += 1
+      console.log('process:', waterfallInfo.currentProcessIndex)
+    }
+    provide(WATERFALL_INFO_KEY, waterfallInfo)
+    const currentProcessIndexs = ref<number[]>([])
 
     const goods = ref<IGood[]>([])
+    watch(() => goods, () => {
+      const lastIndex = currentProcessIndexs.value[currentProcessIndexs.value.length - 1]
+      currentProcessIndexs.value = [lastIndex + 1, lastIndex + 2, lastIndex + 3, lastIndex + 4]
+    })
 
     const requestData = () => {
       return new Promise<IGood[]>((resolve, reject) => {
@@ -187,7 +210,7 @@ export default defineComponent({
     // }
     onUpdated(() => {
       setTimeout(() => {
-        PBL()
+        // PBL()
       }, 1000)
     })
     const { Throttle } = usePerf()
@@ -205,9 +228,30 @@ export default defineComponent({
         }, 800)
       })
     })
+    const status = reactive<boolean[]>([])
+    const completed = (i: number) => {
+      status[i] = true
+      // nextTick(() => {
+      //   debugger
+      //   const {
+      //     clientWidth,
+      //     clientHeight,
+      //   } = itemsRef.value[i]
+      //   console.log(
+      //     clientWidth,
+      //     clientHeight,
+      //   )
+      //   console.log(itemsRef.value[i])
+      // })
+    }
     return {
       containerRef,
+      itemsRef,
+      waterfallInfo,
+      processNext,
       goods,
+      status,
+      completed,
     }
   },
 })

@@ -11,7 +11,7 @@
     "axios": "^0.21.1",
     "es6-promise": "^4.2.8",
     "mock2js": "^1.0.6",
-    "vconsole": "^3.7.0",
+    "vconsole": "^3.8.1",
     "vue": "^3.0.5",
     "vue-router": "^4.0.9",
     "vuex": "^4.0.2"
