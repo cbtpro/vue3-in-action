@@ -69,6 +69,14 @@ const routes = [
     },
     component: () => import('../views/events/index.vue'),
   },
+  {
+    path: '/postcss',
+    name: 'postcss',
+    meta: {
+      title: 'css预处理器',
+    },
+    component: () => import('../views/postcss/index.vue'),
+  },
 ]
 
 export default createRouter({
