@@ -12,6 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-/// <reference path="./event.d.ts">
-/// <reference path="./plugins.d.ts">
-/// <reference path="./waterfall.d.ts">
+<template>
+  <div :class="$style.postcss">
+  </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'postcss',
+})
+</script>
+
+<style lang="postcss" module>
+.postcss {
+  width: 375px;
+  height: 200px;
+  background-color: #e7e7e7;
+}
+</style>

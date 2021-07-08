@@ -49,6 +49,14 @@ const routes = [
     path: '/waterfall-flow',
     name: 'waterfall-flow',
     meta: {
+      title: '新瀑布流',
+    },
+    component: () => import('../views/new-waterfall-flow/index.vue'),
+  },
+  {
+    path: '/waterfall-flow1',
+    name: 'waterfall-flow1',
+    meta: {
       title: '瀑布流',
     },
     component: () => import('../views/waterfall-flow/index.vue'),
@@ -60,6 +68,14 @@ const routes = [
       title: '事件总线',
     },
     component: () => import('../views/events/index.vue'),
+  },
+  {
+    path: '/postcss',
+    name: 'postcss',
+    meta: {
+      title: 'css预处理器',
+    },
+    component: () => import('../views/postcss/index.vue'),
   },
 ]
 

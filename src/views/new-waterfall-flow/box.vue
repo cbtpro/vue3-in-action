@@ -3,14 +3,15 @@
     <div :class="$style.info">
       <a :href="good.href">
         <div :class="$style.pic">
-          <img :src="good.src" style="height: auto;" />
+          <img :src="good.src" @load="loadComplete" style="height: auto;" />
         </div>
       </a>
       <div :class="$style.title">
         <a>
           <div>
             <strong :class="$style.price">
-              <em>¥</em>{{good.price}}
+              <!-- <em>¥</em>{{good.price}} -->
+              {{good.uuid}}
             </strong>
           </div>
           <div>
@@ -69,8 +70,12 @@ export default defineComponent({
       type: Object as PropType<IGood>,
       required: true,
     },
+    index: {
+      type: Number,
+      required: true,
+    },
   },
-  setup(props) {
+  setup(props, { emit }) {
     // const good = reactive<IGood>(props.good)
     const good = toRefs(props).good
     //  watch(() => props.good, (selection, prevSelection) => { 
@@ -89,9 +94,12 @@ export default defineComponent({
     //   good.href = href
     //   good.price = price
     // })
-
+    const loadComplete = () => {
+      emit('completed', props.index)
+    }
     return {
       good,
+      loadComplete,
     }
   },
 })
@@ -99,12 +107,12 @@ export default defineComponent({
 
 <style module>
 .box {
-  position: absolute;
+  /* position: absolute; */
   width: 280px;
   height: auto;
   padding: 10px;
   border: none;
-  float: left;
+  /* float: left; */
 }
 .info {
   width: 280px;
