@@ -77,6 +77,14 @@ const routes = [
     },
     component: () => import('../views/postcss/index.vue'),
   },
+  {
+    path: '/insection-observer',
+    name: 'insection-observer',
+    meta: {
+      title: 'inserction-observer',
+    },
+    component: () => import('../views/insection-observer/index.vue'),
+  },
 ]
 
 export default createRouter({

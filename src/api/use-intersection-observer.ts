@@ -12,16 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Events from './event'
-import perf from './perf'
-import http from './http'
-import IntersectionObserver from './intersection-observer'
+import IntersectionObserver from "../utils/intersection-observer"
 
-export default {
-  install(app: any) {
-    app.config.globalProperties.$events = Events
-    app.config.globalProperties.$perf = perf
-    app.config.globalProperties.$http = http
-    app.config.globalProperties.$IntersectionObserver = IntersectionObserver
-  },
+export default () => {
+  return {
+    IntersectionObserver,
+  }
 }
