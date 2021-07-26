@@ -19,5 +19,7 @@ declare namespace waterfall {
     viewWidth: number
     colHeights: number[]
     currentProcessIndex: number
+    offsetTop: number,
+    offsetLeft: number,
   }
 }

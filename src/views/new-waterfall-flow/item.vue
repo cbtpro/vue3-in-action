@@ -14,6 +14,7 @@ import {
   nextTick,
   onBeforeUpdate,
   onMounted,
+  onUpdated,
   PropType,
   reactive,
   ref,
@@ -40,24 +41,26 @@ export default defineComponent({
     
     // const currentInstance = getCurrentInstance()
     const waterfallInfo = <waterfall.info>inject(WATERFALL_INFO_KEY)
-    watch(() => waterfallInfo, (value, oldValue) => {
-      if (value !== oldValue) {
-        console.log('waterfallInfo: ', waterfallInfo)
-      }
-    })
     const isCompeleted = computed(() => {
       return props.index <= waterfallInfo.currentProcessIndex
     })
     const status = ref(STATUS_BEFORE_RENDER)
-    const top = ref(0)
-    const left = ref(0)
+    const {
+      offsetTop,
+      offsetLeft,
+    } = waterfallInfo
+    const top = ref(offsetTop)
+    const left = ref(offsetLeft)
     const itemStyle = computed(() => {
       return {
         top: top.value + 'px',
         left: left.value + 'px',
       } as CSSProperties
     })
-
+    watch(() => itemStyle, (value, oldValue) => {
+      console.log('需要重绘')
+      emit('re-process', props.index)
+    })
     onBeforeUpdate(() => {
 
     })
@@ -77,22 +80,20 @@ export default defineComponent({
     //       })
     //   })
     // })
+    onUpdated(() => {
+      // console.log(props.index, itemStyle)
+    })
     const itemRef = ref<HTMLDivElement>()
     watch(() => props.completed, (value, oldValue) => {
       if (value && value !== oldValue) {
-        emit('process-next', () => {
-            return new Promise<void>((resolve, reject) => {
-                const {
-                  clientWidth,
-                  clientHeight,
-                } = <HTMLDivElement>itemRef.value
-                console.log(
-                  clientWidth,
-                  clientHeight,
-                )
-                left.value = clientWidth,
-                top.value = clientHeight
-                resolve()
+        emit('process-next-item', () => {
+            return new Promise<[number, HTMLDivElement]>((resolve, reject) => {
+                // const {
+                //   clientWidth,
+                //   clientHeight,
+                // } = <HTMLDivElement>itemRef.value
+                console.log(`${props.index} 渲染完成，继续渲染下一个`)
+                resolve([props.index, <HTMLDivElement>itemRef.value])
               // }, props.index * 1000)
             })
         })

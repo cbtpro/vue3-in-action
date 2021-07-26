@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.box">
     <div :class="$style.info">
-      <a :href="good.href">
+      <!-- <a :href="good.href"> -->
         <div :class="$style.pic">
           <img :src="good.src" @load="loadComplete" style="height: auto;" />
         </div>
-      </a>
+      <!-- </a> -->
       <div :class="$style.title">
         <a>
           <div>
@@ -95,7 +95,7 @@ export default defineComponent({
     //   good.price = price
     // })
     const loadComplete = () => {
-      emit('completed', props.index)
+      emit('load-completed', props.index)
     }
     return {
       good,

@@ -1,15 +1,20 @@
 <template>
   <div ref="containerRef" :class="$style['waterfall-flow']">
-    <item
-      ref="itemsRef"
+    <template
       v-for="(good, $index) in goods"
       :key="good.uuid"
-      :index="$index"
-      :completed="status[$index]"
-      @process-next="processNext"
     >
-      <box :good="good" @completed="completed" :index="$index" />
-    </item>
+      <item
+        ref="itemsRef"
+        v-if="waterfallInfo.currentProcessIndex >= $index"
+        :index="$index"
+        :completed="status[$index]"
+        @process-next-item="processNextItem"
+        @re-process="reProcess"
+      >
+        <box :good="good" @load-completed="loadCompleted" :index="$index" />
+      </item>
+    </template>
   </div>
 </template>
 
@@ -55,19 +60,53 @@ export default defineComponent({
     const itemsRef = ref<HTMLDivElement[]>([])
     const $style = useCssModule();
 
-    // 当前正在渲染的索引
+    // 记录瀑布流的信息
+    const boxWidth = 300
+    const colsNum = Math.floor(document.documentElement.clientWidth / boxWidth)
     const waterfallInfo = reactive<waterfall.info>({
-      boxWidth: 816,
-      colsNum: Math.floor(document.documentElement.clientWidth / 816),
-      viewWidth: 816 * 2,
-      colHeights: [],
-      currentProcessIndex: 0
+      boxWidth, // 每一个盒子的宽度
+      colsNum, // 可以显示多少列
+      viewWidth: boxWidth * colsNum, // 容器宽度
+      colHeights: new Array(colsNum).fill(0), // 每一列的高度
+      currentProcessIndex: 0,
+      offsetTop: 0,
+      offsetLeft: 0,
     })
-    const processNext = async (task: () => Promise<void>) => {
-      await task()
+    const getIndex = (min: number, array: number[]) => {
+      return array.findIndex(x => x <= min)
+    }
+    const getMinHeight = (array: number[]) => {
+      return Math.min.apply(null, array)
+    }
+
+    const processNextItem = async (task: () => Promise<[number, HTMLDivElement]>) => {
+      const [index, item] = await task()
+      const {
+        offsetLeft,
+        offsetTop,
+        offsetWidth,
+        offsetHeight,
+      } = item
+      const colIndex = index % waterfallInfo.colsNum
+      const minHeight = getMinHeight(waterfallInfo.colHeights)
+      const minColIndex = getIndex(minHeight, waterfallInfo.colHeights)
+      if (index < waterfallInfo.colsNum - 1) {
+        waterfallInfo.offsetLeft = colIndex * waterfallInfo.boxWidth + item.offsetWidth
+        waterfallInfo.offsetTop = waterfallInfo.offsetTop
+        waterfallInfo.colHeights[colIndex] = waterfallInfo.colHeights[minColIndex]
+      } else {
+        waterfallInfo.colHeights[colIndex] = offsetHeight 
+        waterfallInfo.offsetLeft = colIndex * waterfallInfo.boxWidth
+        waterfallInfo.offsetTop = minHeight + item.offsetHeight
+        waterfallInfo.colHeights[colIndex] = waterfallInfo.colHeights[colIndex] + offsetHeight
+      }
       waterfallInfo.currentProcessIndex += 1
       console.log('process:', waterfallInfo.currentProcessIndex)
     }
+    const reProcess = (index: number) => {
+      console.log(index)
+    }
+    // 提供瀑布流信息
     provide(WATERFALL_INFO_KEY, waterfallInfo)
     const currentProcessIndexs = ref<number[]>([])
 
@@ -114,16 +153,16 @@ export default defineComponent({
       wrap.style.width = boxW * colsNum + 'px';//为外层赋值宽度
       //	3.循环出所有的box并按照瀑布流排列
       var everyH = [];//定义一个数组存储每一列的高度
-      for (var i = 0; i < boxs.length; i++) {
-        if (i < colsNum) {
-          everyH[i] = (boxs[i].firstElementChild as HTMLElement).offsetHeight;
-        } else {
-          var minH = Math.min.apply(null, everyH);//获得最小的列的高度
-          var minIndex = getIndex(minH, everyH); //获得最小列的索引
-          getStyle((boxs[i].firstElementChild as HTMLElement), minH, (boxs[minIndex].firstElementChild as HTMLElement).offsetLeft, i);
-          everyH[minIndex] += (boxs[i].firstElementChild as HTMLElement).offsetHeight;//更新最小列的高度
-        }
-      }
+      // for (var i = 0; i < boxs.length; i++) {
+      //   if (i < colsNum) {
+      //     everyH[i] = (boxs[i].firstElementChild as HTMLElement).offsetHeight;
+      //   } else {
+      //     var minH = Math.min.apply(null, everyH);//获得最小的列的高度
+      //     var minIndex = getIndex(minH, everyH); //获得最小列的索引
+      //     getStyle((boxs[i].firstElementChild as HTMLElement), minH, (boxs[minIndex].firstElementChild as HTMLElement).offsetLeft, i);
+      //     everyH[minIndex] += (boxs[i].firstElementChild as HTMLElement).offsetHeight;//更新最小列的高度
+      //   }
+      // }
     }
     /**
      * 设置加载样式
@@ -143,19 +182,6 @@ export default defineComponent({
       //   "opacity" : "1"
       // }, 999);
       getStartNum = index;//更新请求数据的条数位置
-    }
-    /**
-     * 获取最小列的索引
-     * @param  minH	 [Num] 最小高度
-     * @param  everyH [Arr] 所有列高度的数组
-     */
-    function getIndex(minH: number, everyH: number[]): number {
-      let i = 0
-      for (let index in everyH) {
-        if (everyH[index] == minH)
-          i = Number(index)
-      }
-      return i
     }
     const nextFall = (data: IGood[] = []) => {
       goods.value = goods.value.concat(data)
@@ -229,10 +255,9 @@ export default defineComponent({
       })
     })
     const status = reactive<boolean[]>([])
-    const completed = (i: number) => {
+    const loadCompleted = (i: number) => {
       status[i] = true
       // nextTick(() => {
-      //   debugger
       //   const {
       //     clientWidth,
       //     clientHeight,
@@ -248,10 +273,11 @@ export default defineComponent({
       containerRef,
       itemsRef,
       waterfallInfo,
-      processNext,
+      processNextItem,
+      reProcess,
       goods,
       status,
-      completed,
+      loadCompleted,
     }
   },
 })
