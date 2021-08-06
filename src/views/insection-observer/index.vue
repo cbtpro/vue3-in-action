@@ -1,6 +1,8 @@
 <template>
-  <div ref="rootRef" :class="$style['insection-observer']">
-    <div v-for="n in 10" :ref="setItemRef" :class="$style.box"></div>
+  <div :class="$style.container">
+    <div ref="rootRef" :class="$style['insection-observer']">
+      <div v-for="n in 10" :ref="setItemRef" :class="$style.box"></div>
+    </div>
   </div>
 </template>
 
@@ -61,7 +63,7 @@ export default defineComponent({
 })
 </script>
 
-<style module>
+<style lang="postcss" module>
 :root {
   --box-bg-color1: brown;
   --box-bg-color2: red;
@@ -74,9 +76,14 @@ export default defineComponent({
   --box-bg-color9: #f75c4c;
   --box-bg-color10: #e74c3c;
 }
+.container {
+  width: 375px;
+  height: 812px;
+  background-color: #fff;
+}
 .insection-observer {
-  width: 600px;
-  height: 800px;
+  width: 375px;
+  height: 600px;
   background-color: #e7e7e7;
   overflow-y: scroll;
   padding-top: 50px;
@@ -86,7 +93,7 @@ export default defineComponent({
   display: none;
 }
 .box {
-  width: 300px;
+  width: 375px;
   height: 300px;
   margin-top: 30px;
   margin-bottom: 30px;
