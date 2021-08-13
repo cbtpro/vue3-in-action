@@ -31,6 +31,7 @@ import MapContainerInner from '@/views/custom-map/map-container-inner.vue'
 import Shops from '@/views/custom-map/shops/index.vue'
 import useApi from '../../api/use-api'
 import useHttp from '../../api/use-http'
+import useDemoService from './use-demo-service'
 
 export default defineComponent({
   name: 'custom-map',
@@ -43,26 +44,36 @@ export default defineComponent({
     const { request } = useApi()
     const testApi = async () => {
         try {
-          const response = await request({
+          const response = await request<ITest>({
           url: '/api/index/test',
         })
-        console.log(response)
+        console.log('testApi: ', response.data.now)
       } catch (error) {
         console.log(error)
       }
     }
     testApi()
 
-    const { get } = useHttp()
+    const { http } = useHttp()
     const testHttp = async () => {
-        try {
-          const response = await get('/api/index/test')
-        console.log('testUseHttp', response)
+      try {
+        const response = await http<ITest>({
+          url: '/api/index/test',
+        })
+        console.log('testUseHttp', response.data.now)
       } catch (error) {
         console.log(error)
       }
     }
     testHttp()
+    const { queryTest } = useDemoService()
+    const testUseDemoService = async () => {
+      const response = await queryTest({
+        id: '1',
+      })
+      console.log('测试use-demo-services：', response.data.now)
+    }
+    testUseDemoService()
     return {
       name: 'peter',
     }
@@ -77,8 +88,13 @@ export default defineComponent({
   methods: {
     async testHttp() {
       try {
-        const response = await this.$http.get('/api/index/test')
-        console.log('testHttp:', response)
+        const re = await this.$demoServices.test<ITest>()
+        console.log('测试this.$demoServices.test', re.data.now)
+        const response = await this.$http<ITest>({
+          method: 'get',
+          url: '/api/index/test'
+        })
+        console.log('testHttp:', response.data.now)
       } catch (error) {
         console.log(error)
       } finally {

@@ -12,16 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import axios from 'axios'
+import originAxios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
 
-export default {
-  get: axios.get,
-  post: axios.post,
-  put: axios.put,
-  delete: axios.delete,
-  patch: axios.patch,
-  getUri: axios.getUri,
-  request: axios.request,
-  head: axios.head,
-  options: axios.options,
+const BASE_URL = <string>import.meta.env.VITE_BASE_URL
+
+const axios = originAxios.create({
+  baseURL: BASE_URL,
+  timeout: 20000,
+})
+
+axios.interceptors.response.use(
+  <T>(response: AxiosResponse<IResponseData<T>>): Promise<any> => {
+    return Promise.resolve(response.data)
+  },
+  (error) => {
+    return Promise.reject(error)
+  },
+)
+
+export default function http<T>(config: AxiosRequestConfig) {
+  return axios(config) as unknown as IResponseData<T>
 }

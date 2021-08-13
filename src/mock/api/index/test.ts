@@ -16,7 +16,11 @@ import Mock from 'mock2js'
 
 const response = () => {
   return {
-    now: Date.now(),
+    code: 0,
+    content: '',
+    data: {
+      now: Date.now(),
+    }
   }
 }
 

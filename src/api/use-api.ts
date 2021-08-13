@@ -12,12 +12,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import axios, { AxiosRequestConfig } from 'axios'
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export default () => {
 
-  const request = (config: AxiosRequestConfig) => {
-    return axios(config)
+  axios.interceptors.response.use(
+    <T>(response: AxiosResponse<IResponseData<T>>): Promise<any> => {
+      return Promise.resolve(response.data)
+    },
+    (error) => Promise.reject(error)
+  )
+  const request = <T>(config: AxiosRequestConfig) => {
+    return axios(config) as unknown as IResponseData<T>
   }
   return {
     request,

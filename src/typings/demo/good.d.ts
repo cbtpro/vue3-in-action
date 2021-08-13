@@ -20,3 +20,7 @@ interface IGood {
     href: string
     price: number
 }
+
+interface ITest {
+  now: number
+}

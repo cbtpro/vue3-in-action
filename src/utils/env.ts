@@ -1,4 +1,4 @@
-// Copyright 2021 cbtpro
+// Copyright 2021 peter
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,4 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-VITE_BASE_URL=/api
+const isBrowser = typeof window !== 'undefined'
+
+const UA = isBrowser ? window.navigator.userAgent.toLowerCase() : ''
+
+const isIOS = new RegExp('iphone|ipad|ipod|ios').test(UA)
+
+const isMAC = new RegExp('mac').test(UA)
+
+const isPad = new RegExp('ipad').test(UA)

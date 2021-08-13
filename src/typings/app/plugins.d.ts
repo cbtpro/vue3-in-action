@@ -14,11 +14,13 @@
 import events from '../../utils/event'
 import perf from '../../utils/perf'
 import http from '../../utils/http'
+import demoServices from '../../services/demo'
 
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
-    $events: typeof events
-    $http: typeof http
-    $perf: typeof perf
+    $events: typeof events;
+    $http: typeof http;
+    $perf: typeof perf;
+    $demoServices: typeof demoServices;
   }
 }
