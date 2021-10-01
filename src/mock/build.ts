@@ -1,4 +1,4 @@
-// Copyright 2021 cbtpro
+// Copyright 2021 peter
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,17 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import Mockjs from 'mock2js'
-import { isDev } from '../config'
+export const builder = <T>(data: T, code = 200, content = '') => {
+  return {
+    code,
+    content,
+    data,
+  }
+}
 
-if (isDev) {
-
-  import('./api/index/authority')
-  import('./api/index/test')
-  
-  Mockjs.setup({
-    timeout: 800,
-  })
-
-  console.log('mock initial complete!')
+export default {
+  builder,
 }
