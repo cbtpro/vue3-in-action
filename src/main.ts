@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import 'es6-promise/auto'
-import utils from './utils'
-import services from './services'
+import mainCommon from './main.common'
 import './mock'
-import store from './store'
+import store, { key } from './store'
 import router from './router'
 // import VConsole from 'vconsole'
 import App from './App.vue'
@@ -14,11 +13,9 @@ console.log(process.env.NODE_ENV)
 
 const app = createApp(App)
 
-app.use(utils)
+mainCommon.init(app)
 
-app.use(services)
-
-app.use(store)
+app.use(store, key)
 
 app.use(router)
 
