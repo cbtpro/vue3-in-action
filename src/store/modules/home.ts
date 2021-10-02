@@ -12,23 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { BASE_URL } from '../config'
+const initialState: IHomeState = {
+  systemTime: Date.now(),
+}
 
-export default () => {
-
-  axios.defaults.baseURL = BASE_URL
-
-  axios.interceptors.response.use(
-    <T>(response: AxiosResponse<IResponseData<T>>): Promise<any> => {
-      return Promise.resolve(response.data)
-    },
-    (error) => Promise.reject(error)
-  )
-  const request = <T>(config: AxiosRequestConfig) => {
-    return axios(config) as unknown as IResponseData<T>
-  }
-  return {
-    request,
-  }
+export default {
+  namespaced: true,
+  state: {
+    ...initialState,
+  },
+  mutations: {},
+  actions: {},
+  getters: {
+    systemTime(state: IHomeState) {
+      return state.systemTime
+    }
+  },
 }

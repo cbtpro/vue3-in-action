@@ -1,4 +1,4 @@
-// Copyright 2021 cbtpro
+// Copyright 2021 peter
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,16 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const initialState = {
-  systemTime: Date.now(),
-}
+export const isDev = process.env.NODE_ENV === 'development'
 
-export default {
-  namespaced: true,
-  state: {
-    ...initialState,
-  },
-  mutations: {},
-  actions: {},
-  getters: {},
-}
+export const VITE_VERSION = <string>import.meta.env.VITE_VERSION
+export const BASE_URL = <string>import.meta.env.VITE_BASE_URL

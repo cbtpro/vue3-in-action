@@ -45,7 +45,7 @@ export default defineComponent({
     const testApi = async () => {
         try {
           const response = await request<ITest>({
-          url: '/api/index/test',
+          url: '/index/test',
         })
         console.log('testApi: ', response.data.now)
       } catch (error) {
@@ -58,7 +58,7 @@ export default defineComponent({
     const testHttp = async () => {
       try {
         const response = await http<ITest>({
-          url: '/api/index/test',
+          url: '/index/test',
         })
         console.log('testUseHttp', response.data.now)
       } catch (error) {
@@ -92,7 +92,7 @@ export default defineComponent({
         console.log('测试this.$demoServices.test', re.data.now)
         const response = await this.$http<ITest>({
           method: 'get',
-          url: '/api/index/test'
+          url: '/index/test'
         })
         console.log('testHttp:', response.data.now)
       } catch (error) {

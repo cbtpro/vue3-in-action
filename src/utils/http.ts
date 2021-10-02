@@ -13,8 +13,7 @@
 // limitations under the License.
 
 import originAxios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios'
-
-const BASE_URL = <string>import.meta.env.VITE_BASE_URL
+import { BASE_URL } from '../config'
 
 const axios = originAxios.create({
   baseURL: BASE_URL,

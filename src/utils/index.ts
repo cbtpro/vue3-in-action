@@ -12,13 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+import { App } from 'vue'
+
 import Events from './event'
 import perf from './perf'
 import http from './http'
 import IntersectionObserver from './intersection-observer'
 
 export default {
-  install(app: any) {
+  install(app: App<Element>) {
     app.config.globalProperties.$events = Events
     app.config.globalProperties.$perf = perf
     app.config.globalProperties.$http = http

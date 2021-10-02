@@ -11,10 +11,13 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+import { App } from 'vue'
+
 import demo from './demo'
 
 export default {
-  install(app: any) {
+  install(app: App<Element>) {
     app.config.globalProperties.$demoServices = {
       ...demo,
     }
