@@ -85,6 +85,14 @@ const routes = [
     },
     component: () => import('../views/insection-observer/index.vue'),
   },
+  {
+    path: '/authority',
+    name: 'authority',
+    meta: {
+      title: 'authority',
+    },
+    component: () => import('../views/authority/index.vue'),
+  }
 ]
 
 export default createRouter({
