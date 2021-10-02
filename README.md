@@ -25,3 +25,12 @@ Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
 3. Open `src/main.ts` in VSCode
 4. Open the VSCode command palette
 5. Search and run "Select TypeScript version" -> "Use workspace version"
+
+### 安装vue-devtools
+### 支持open-in-editor
+* 添加code环境变量
+```shell
+# Launch VS Code.
+# Open the Command Palette (Cmd+Shift+P) and type 'shell command' to find the Shell Command: Install 'code' command in PATH command.
+```
+参考https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line

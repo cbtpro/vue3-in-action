@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.container">
     <div ref="rootRef" :class="$style['insection-observer']">
-      <div v-for="n in 10" :ref="setItemRef" :class="$style.box"></div>
+      <div v-for="n in 10" :ref="setItemRef" :key="n" :class="$style.box"></div>
     </div>
   </div>
 </template>
