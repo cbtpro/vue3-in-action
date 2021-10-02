@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.child">
-    <button @click="test">触发事件</button>
+    <button v-prevent-re-click @click="test">触发事件</button>
   </div>
 </template>
 
