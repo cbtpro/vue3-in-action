@@ -101,6 +101,14 @@ const routes = [
     },
     component: () => import('../views/star/index.vue'),
   },
+  {
+    path: '/swiper-demo',
+    name: 'swiper-demo',
+    meta: {
+      title: 'swiper-demo',
+    },
+    component: () => import('../views/swiper-demo/index.vue')
+  },
 ]
 
 export default createRouter({
