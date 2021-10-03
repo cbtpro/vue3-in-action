@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import BackgroundChessboard from '../../components/Background/Chessboard.vue'
+import BackgroundChessboard from '../../components/background/Chessboard.vue'
 
 export default defineComponent({
   name: 'map-container',

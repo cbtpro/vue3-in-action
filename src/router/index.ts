@@ -92,7 +92,15 @@ const routes = [
       title: 'authority',
     },
     component: () => import('../views/authority/index.vue'),
-  }
+  },
+  {
+    path: '/star',
+    name: 'star',
+    meta: {
+      title: '星星背景',
+    },
+    component: () => import('../views/star/index.vue'),
+  },
 ]
 
 export default createRouter({

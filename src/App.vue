@@ -15,7 +15,7 @@ export default defineComponent({
 </script>
 
 <style>
-body {
+html, body {
   margin: 0px;
 }
 #app {
@@ -24,6 +24,5 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
 }
 </style>
