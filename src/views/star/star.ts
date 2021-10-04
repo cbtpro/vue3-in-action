@@ -1,5 +1,5 @@
 const maxStars = 100
-function random(min, max) {
+function random(min: number, max = min) {
   if (arguments.length < 2) {
     max = min
     min = 0
@@ -12,14 +12,24 @@ function random(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-function maxOrbit(x, y) {
+function maxOrbit(x: number, y: number) {
   let max = Math.max(x, y)
   let diameter = Math.round(Math.sqrt(max * max + max * max))
   return diameter / 2
 }
 
 export default class {
-  constructor(w, h, ctx, ctx2, canvas2) {
+  ctx: CanvasRenderingContext2D
+  ctx2: CanvasRenderingContext2D
+  canvas2: HTMLCanvasElement
+  orbitRadius: number
+  radius: number
+  orbitX: number
+  orbitY: number
+  timePassed: number
+  speed: number
+  alpha: number
+  constructor(w: number, h: number, ctx: CanvasRenderingContext2D, ctx2: CanvasRenderingContext2D, canvas2: HTMLCanvasElement) {
     this.ctx = ctx
     this.ctx2 = ctx2
     this.canvas2 = canvas2

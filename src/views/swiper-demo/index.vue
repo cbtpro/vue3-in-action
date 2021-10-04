@@ -44,7 +44,7 @@
         <div
           class="parallax-bg"
           :style="{
-            'background-image': 'url(https://swiperjs.com/demos/images/nature-1.jpg)',
+            backgroundImage: 'url(https://swiperjs.com/demos/images/nature-1.jpg)',
           }"
           data-swiper-parallax="-23%"
         ></div>
