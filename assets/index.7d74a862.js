@@ -1,0 +1,1 @@
+import{e as s,o as e,f as o}from"./vendor.d9a60650.js";var t=s({name:"postcss"});var a={postcss:"_postcss_ckgag_2"};(t.__cssModules={}).$style=a,t.render=function(s,t,a,r,c,l){return e(),o("div",{class:s.$style.postcss},null,2)};export default t;
