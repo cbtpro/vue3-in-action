@@ -9,13 +9,14 @@ import HelloWorld from './components/HelloWorld.vue'
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+  },
 })
 </script>
 
 <style>
-html, body {
+html,
+body {
   margin: 0px;
 }
 #app {

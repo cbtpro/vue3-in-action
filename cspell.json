@@ -1,0 +1,19 @@
+{
+    "version": "0.2",
+    "ignorePaths": [],
+    "dictionaryDefinitions": [],
+    "dictionaries": [],
+    "words": [
+        "animaejs",
+        "animejs",
+        "openinvscode",
+        "swiper",
+        "vconsole",
+        "vite",
+        "vite-plugin-openinvscode",
+        "vitejs",
+        "vuex"
+    ],
+    "ignoreWords": [],
+    "import": []
+}
