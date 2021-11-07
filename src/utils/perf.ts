@@ -56,7 +56,25 @@ export class Throttle {
   }
 }
 
+export const debounce = function (action: Function, idle: number = 300, immediate: boolean = false) {
+  let last: number | undefined
+  return function(this: void, ...rest: any) {
+    if (last) window.clearTimeout(last)
+    if (immediate) {
+      if (!last) action.apply(this, rest)
+      last = window.setTimeout(() => {
+        last = undefined
+      }, idle)
+    } else {
+      last = window.setTimeout(() => {
+        action.apply(this, rest)
+      }, idle)
+    }
+  }
+}
+
 export default {
   Debounce,
   Throttle,
+  debounce,
 }

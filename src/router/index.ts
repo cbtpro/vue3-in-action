@@ -107,7 +107,15 @@ const routes = [
     meta: {
       title: 'swiper-demo',
     },
-    component: () => import('../views/swiper-demo/index.vue')
+    component: () => import('../views/swiper-demo/index.vue'),
+  },
+  {
+    path: '/debounce',
+    name: 'debounce',
+    meta: {
+      title: 'debounce',
+    },
+    component: () => import('../views/debounce/index.vue'),
   },
 ]
 

@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Debounce, Throttle} from '../utils/perf'
+import { Debounce, Throttle, debounce, } from '../utils/perf'
 
 export default () => {
   return {
     Debounce,
     Throttle,
+    debounce,
   }
 }
