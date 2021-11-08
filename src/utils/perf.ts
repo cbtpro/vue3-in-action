@@ -13,7 +13,7 @@
 // limitations under the License.
 
 export class Debounce {
-  static use(action: Function, idle: number = 300, immediate: boolean = false) {
+  static use(action: Function, idle: number = 300, immediate: boolean = false): Function {
     let last: number | undefined
     return (...rest: any) => {
       if (last) window.clearTimeout(last)
@@ -33,7 +33,7 @@ export class Debounce {
 
 export class Throttle {
   private lastTime: number | undefined = Date.now()
-  use(action: Function, idle: number = 300, immediate: boolean = true) {
+  use(action: Function, idle: number = 300, immediate: boolean = true): Function {
     if (immediate) {
       return (...rest: any) => {
         const now = Date.now()
