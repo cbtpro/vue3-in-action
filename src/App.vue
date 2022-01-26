@@ -5,28 +5,15 @@
   <router-view></router-view>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { defineComponent } from 'vue'
 import { useHomeStore } from './store-use-pinia'
 import HelloWorld from './components/HelloWorld.vue'
 import { storeToRefs } from 'pinia'
 
-export default defineComponent({
-  name: 'App',
-  components: {
-    HelloWorld,
-  },
-  setup() {
-    const homeStore = useHomeStore()
-    const { updateDate, } = homeStore
-    const { now, nowFmt, } = storeToRefs(homeStore)
-    return {
-      now,
-      nowFmt,
-      updateDate,
-    }
-  },
-})
+const homeStore = useHomeStore()
+const { updateDate, } = homeStore
+const { now, nowFmt, } = storeToRefs(homeStore)
 </script>
 
 <style>
