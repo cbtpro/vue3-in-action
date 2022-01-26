@@ -11,9 +11,12 @@ export default defineConfig({
   ],
   base: './',
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, '/src')
-    },
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, 'src'),
+      },
+    ],
   },
   server: {
     proxy: {

@@ -1,4 +1,4 @@
-// Copyright 2021 peter
+// Copyright 2022 cbtpro
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,10 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-export const isDev = process.env.NODE_ENV === 'development'
+import { defineStore } from 'pinia'
+import dayjs from 'dayjs'
+import { TIME_FMT } from './../config/index'
 
-export const VITE_VERSION = <string>import.meta.env.VITE_VERSION
-export const BASE_URL = <string>import.meta.env.VITE_BASE_URL
-
-export const DATE_FMT = 'YYYY-MM-DD'
-export const TIME_FMT = 'YYYY-MM-DD HH:mm:ss'
+export const useHomeStore = defineStore({
+  id: 'home',
+  state: () => {
+    return {
+      now: Date.now()
+    }
+  },
+  getters: {
+    nowFmt(state) {
+      return dayjs(state.now).format(TIME_FMT)
+    },
+  },
+  actions: {
+    updateDate() {
+      this.now = dayjs(this.now).add(1, 'd').valueOf()
+    },
+  },
+})

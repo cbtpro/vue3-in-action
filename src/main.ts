@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import 'es6-promise/auto'
 import mainCommon from './main.common'
 import './mock'
@@ -14,6 +15,8 @@ console.log(process.env.NODE_ENV)
 const app = createApp(App)
 
 mainCommon.init(app)
+
+app.use(createPinia())
 
 app.use(store, key)
 
