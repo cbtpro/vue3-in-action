@@ -1,11 +1,11 @@
 // Copyright 2021 cbtpro
-// 
+//
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-// 
+//
 //     http://www.apache.org/licenses/LICENSE-2.0
-// 
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,7 +13,11 @@
 // limitations under the License.
 
 export class Debounce {
-  static use(action: Function, idle: number = 300, immediate: boolean = false): Function {
+  static use(
+    action: Function,
+    idle: number = 300,
+    immediate: boolean = false,
+  ): Function {
     let last: number | undefined
     return (...rest: any) => {
       if (last) window.clearTimeout(last)
@@ -33,11 +37,15 @@ export class Debounce {
 
 export class Throttle {
   private lastTime: number | undefined = Date.now()
-  use(action: Function, idle: number = 300, immediate: boolean = true): Function {
+  use(
+    action: Function,
+    idle: number = 300,
+    immediate: boolean = true,
+  ): Function {
     if (immediate) {
       return (...rest: any) => {
         const now = Date.now()
-        if(now - (this.lastTime as number) > idle) {
+        if (now - (this.lastTime as number) > idle) {
           action.apply(this, rest)
           this.lastTime = now
         }
@@ -56,9 +64,13 @@ export class Throttle {
   }
 }
 
-export const debounce = function (action: Function, idle: number = 300, immediate: boolean = false) {
+export const debounce = function (
+  action: Function,
+  idle: number = 300,
+  immediate: boolean = false,
+) {
   let last: number | undefined
-  return function(this: void, ...rest: any) {
+  return function (this: void, ...rest: any[]) {
     if (last) window.clearTimeout(last)
     if (immediate) {
       if (!last) action.apply(this, rest)
@@ -69,6 +81,33 @@ export const debounce = function (action: Function, idle: number = 300, immediat
       last = window.setTimeout(() => {
         action.apply(this, rest)
       }, idle)
+    }
+  }
+}
+
+export const throttle = function (
+  action: Function,
+  idle: number = 300,
+  immediate: boolean = true,
+): Function {
+  let lastTime: number | undefined = Date.now()
+  if (immediate) {
+    return function (this: void, ...rest: any) {
+      const now = Date.now()
+      if (now - (lastTime as number) > idle) {
+        action.apply(this, rest)
+        lastTime = now
+      }
+    }
+  } else {
+    return function (this: void, ...rest: any) {
+      if (!lastTime) {
+        action.apply(this, rest)
+        lastTime = window.setTimeout(() => {
+          if (lastTime) window.clearTimeout(lastTime)
+          lastTime = undefined
+        }, idle)
+      }
     }
   }
 }
