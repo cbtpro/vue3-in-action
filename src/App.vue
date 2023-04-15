@@ -2,6 +2,8 @@
   <div>now: {{now}}</div>
   <div>nowFmt: {{nowFmt}}</div>
   <button @click="updateDate">下一天</button>
+  <animation-time />
+  <hello-world msg="Hello World!" />
   <router-view></router-view>
 </template>
 
@@ -10,6 +12,7 @@ import { defineComponent } from 'vue'
 import { useHomeStore } from './store-use-pinia'
 import HelloWorld from './components/HelloWorld.vue'
 import { storeToRefs } from 'pinia'
+import AnimationTime from './components/animation-time/index.vue';
 
 const homeStore = useHomeStore()
 const { updateDate, } = homeStore
