@@ -1,16 +1,16 @@
 <template>
-  <div :class="[$style['demo-list']]" @click="handler">demo-list{{store.state.home.systemTime}}</div>
+  <div :class="[$style['demo-list']]" @click="handler">demo-list{{store.now}}</div>
 </template>
 
 <script lang="ts">
 import {  defineComponent } from 'vue'
-import { useStore } from '../../store'
 import { useRouter } from 'vue-router'
+import { useHomeStore } from '../../store';
 
 export default defineComponent({
   name: 'demo-list',
   setup() {
-    const store = useStore()
+    const store = useHomeStore()
     const router = useRouter()
     return {
       store,

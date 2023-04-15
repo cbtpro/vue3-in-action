@@ -1,4 +1,4 @@
-// Copyright 2021 peter
+// Copyright 2022 cbtpro
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,46 +12,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { Commit } from 'vuex'
-import { UPDATE_AUTHORITY } from './mutations-type'
+import { defineStore } from 'pinia'
 
-const initialState: IUserAuthority = {
-  roles: [
-    {
-      uuid: 'e307713c-f191-43c7-9da6-c33ef193ba3a',
-      rolename: 'NORMAL',
-      description: '普通用户',
-      updateTime: 1593193926684,
-      createTime: 1593164217134
-    },
-    {
-      uuid: '81c33426-faf2-47f9-9256-ea5667418807',
-      rolename: 'ADMIN',
-      description: '超级管理员用户',
-      updateTime: 1593164217183,
-      createTime: 1593164217183
+export const useAuthorityStore = defineStore({
+  id: 'authority',
+  state: () => {
+    return {
+      roles: [
+        {
+          uuid: 'e307713c-f191-43c7-9da6-c33ef193ba3a',
+          rolename: 'NORMAL',
+          description: '普通用户',
+          updateTime: 1593193926684,
+          createTime: 1593164217134
+        },
+        {
+          uuid: '81c33426-faf2-47f9-9256-ea5667418807',
+          rolename: 'ADMIN',
+          description: '超级管理员用户',
+          updateTime: 1593164217183,
+          createTime: 1593164217183
+        }
+      ]
     }
-  ]
-}
-
-export default {
-  namespaced: true,
-  state: {
-    ...initialState,
   },
-  mutations: {
-    [UPDATE_AUTHORITY](state: IUserAuthority, payload: IUserRole[]) {
-      state.roles = payload
-    },
-  },
+  getters: {},
   actions: {
-    updateAuthority(context: { commit: Commit }, roles: IUserRole[]) {
-      context.commit(UPDATE_AUTHORITY, roles)
+    updateAuthority(roles: IUserRole[]) {
+      this.roles = roles
     },
   },
-  getters: {
-    roles(state: IUserAuthority) {
-      return state.roles
-    }
-  },
-}
+})

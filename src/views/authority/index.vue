@@ -13,29 +13,22 @@
 
 <script lang="ts">
 import { computed, defineComponent, onBeforeMount } from 'vue'
-import { createNamespacedHelpers, } from 'vuex'
-import { useStore } from '../../store'
+import { useAuthorityStore, } from '../../store'
 import useHttp from '../../api/use-http'
-
-const { mapActions, } = createNamespacedHelpers('authority')
 
 export default defineComponent({
   name: 'authority',
   setup() {
-    const store = useStore()
+    const store = useAuthorityStore()
     const { http } = useHttp()
 
-    // const auths = computed(() => {
-    //   const { roles } = store.state.authority
-    //   return roles.map(role => role.rolename)
-    // })
     const init = async () => {
       try {
         const { data, } = await http<IUserRole[]>({
           url: '/index/authority',
           method: 'get',
         })
-        store.dispatch('authority/updateAuthority', data)
+        store.updateAuthority(data);
       } catch (error) {
         console.log(error)
       }
@@ -44,9 +37,10 @@ export default defineComponent({
       init()
     })
     return {
+      store,
       // auths,
       test() {
-        alert(Date.now())
+        console.log(Date.now())
       },
     }
   },
@@ -54,12 +48,9 @@ export default defineComponent({
     this.init()
   },
   methods: {
-    ...mapActions([
-      'updateAuthority',
-    ]),
     init() {
       window.setTimeout(() => {
-        this.updateAuthority([])
+        this.store.updateAuthority([])
       }, 5000)
     },
   },

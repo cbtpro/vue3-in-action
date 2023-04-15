@@ -12,24 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import { InjectionKey } from 'vue'
-import { createStore, Store, useStore as baseUseStore, } from 'vuex'
-import authority from './modules/authority'
-import home from './modules/home'
+import { useAuthorityStore } from './modules/authority';
+import { useHomeStore } from './modules/home';
 
-// 定义 injection key
-export const key: InjectionKey<Store<IAppStore>> = Symbol()
-
-const store = createStore<IAppStore>({
-  modules: {
-    authority,
-    home,
-  },
-})
-
-// 定义自己的 `useStore` 组合式函数
-export function useStore () {
-  return baseUseStore(key)
-}
-
-export default store
+export {
+  useAuthorityStore,
+  useHomeStore,
+};

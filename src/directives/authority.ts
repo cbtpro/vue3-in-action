@@ -13,10 +13,11 @@
 // limitations under the License.
 
 import { DirectiveBinding, VNode } from 'vue'
-import store from '../store'
+import { useAuthorityStore, } from '../store'
 
 const updateHandle = (el: HTMLElement, binding: DirectiveBinding, vnode: VNode)  => {
-  const roles: IUserRole[] = store.getters['authority/roles']
+  const store = useAuthorityStore();
+  const roles: IUserRole[] = store.roles || [];
   const rolenames = roles.map(role => role.rolename)
   const {
     modifiers,

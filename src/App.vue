@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-import { useHomeStore } from './store-use-pinia'
+import { useHomeStore } from './store'
 import HelloWorld from './components/HelloWorld.vue'
 import { storeToRefs } from 'pinia'
 import AnimationTime from './components/animation-time/index.vue';

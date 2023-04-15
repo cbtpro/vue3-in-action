@@ -1,4 +1,4 @@
-// Copyright 2021 cbtpro
+// Copyright 2022 cbtpro
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,20 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-const initialState: IHomeState = {
-  systemTime: Date.now(),
-}
+import { defineStore } from 'pinia'
+import dayjs from 'dayjs'
+import { TIME_FMT } from '../../config/index'
 
-export default {
-  namespaced: true,
-  state: {
-    ...initialState,
-  },
-  mutations: {},
-  actions: {},
-  getters: {
-    systemTime(state: IHomeState) {
-      return state.systemTime
+export const useHomeStore = defineStore({
+  id: 'home',
+  state: () => {
+    return {
+      now: Date.now()
     }
   },
-}
+  getters: {
+    nowFmt(state) {
+      return dayjs(state.now).format(TIME_FMT)
+    },
+  },
+  actions: {
+    updateDate() {
+      this.now = dayjs(this.now).add(1, 'd').valueOf()
+    },
+  },
+})

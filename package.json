@@ -13,12 +13,11 @@
     "dayjs": "^1.10.7",
     "es6-promise": "^4.2.8",
     "mock2js": "^1.0.6",
-    "pinia": "^2.0.9",
+    "pinia": "^2.0.34",
     "swiper": "^7.4.1",
     "vconsole": "^3.11.2",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.12",
-    "vuex": "^4.0.2"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@types/animejs": "^3.1.4",
