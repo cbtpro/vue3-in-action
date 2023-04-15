@@ -39,7 +39,10 @@ export default defineComponent({
   setup() {
     const mapRef = ref<HTMLDivElement>()
     const getMapInfo = () => {
-      const mapElement = <HTMLDivElement>mapRef.value
+      const mapElement = <HTMLDivElement>mapRef.value;
+      if (!mapElement) {
+        return;
+      }
       const view = <HTMLDivElement>mapElement.offsetParent
       const {
         clientWidth: viewWidth,
@@ -105,6 +108,9 @@ export default defineComponent({
       var movey = e.targetTouches[0].pageY - startY;
       let left = x + movex
       let top = y + movey
+      if (!mapInfo) {
+        return;
+      }
       const {
         range: {
           startX: mapStartX,
@@ -159,6 +165,9 @@ export default defineComponent({
     }
     const initMap = () => {
       const mapInfo = getMapInfo()
+      if (!mapInfo) {
+        return;
+      }
       const mapDiv = <HTMLDivElement>mapRef.value
       const {
         center: {
@@ -182,6 +191,9 @@ export default defineComponent({
     // }
     const move = (top: number, left: number) => {
       const mapInfo = getMapInfo()
+      if (!mapInfo) {
+        return;
+      }
       const {
         range: {
           startX: mapStartX,
@@ -246,6 +258,9 @@ export default defineComponent({
     })
     const mapClickHandle = (e: MouseEvent) => {
       const mapInfo = getMapInfo()
+      if (!mapInfo) {
+        return;
+      }
       const {
         view: {
           width,
