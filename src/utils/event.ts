@@ -39,7 +39,7 @@ class Event {
       })
     }
   }
-  emit(name: string | symbol, ...rest: any) {
+  emit(name: string | symbol, ...rest: unknown[]) {
     const event = this.findEventByName(name)
     if (!event) {
       console.warn('事件', name, '没有注册过')

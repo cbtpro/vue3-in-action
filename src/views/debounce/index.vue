@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button @click="okHandle('peter')">测试debounce，请打卡控制台</button>
+    <button @click="okHandle('peter')">测试debounce，请打开控制台</button>
   </div>
 </template>
 

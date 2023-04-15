@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
-import Star from '../../components/background/Star'
+import Star from '../../components/background/star'
 import canvasFn from './star_1'
 import Star1 from './star'
 
